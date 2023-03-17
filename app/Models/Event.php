@@ -7,5 +7,19 @@ use Illuminate\Database\Eloquent\Model;
 
 class Event extends Model
 {
+    protected $fillable = [
+        'type',
+        'minute',
+    ];
+
     use HasFactory;
+
+    public function game()
+    {
+        return $this->belongsTo(Game::class);
+    }
+    public function plyer()
+    {
+        return $this->belongsTo(Player::class);
+    }
 }

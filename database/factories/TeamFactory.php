@@ -16,8 +16,12 @@ class TeamFactory extends Factory
      */
     public function definition(): array
     {
+        $teamName = fake()->teamName();
+
         return [
-            //
+            'name' => $teamName,
+            'shortname' => strtoupper(substr($teamName, 0, rand(2,4))),
+            'image' => fake()->imageUrl(),
         ];
     }
 }
