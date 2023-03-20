@@ -19,13 +19,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // \App\Models\User::factory(10)->create();
-
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
-
+        // Generate users
         $users = collect();
         $users->add(User::factory()->create([
             'email' => 'admin@szerveroldali.hu',
@@ -37,6 +31,7 @@ class DatabaseSeeder extends Seeder
             ]));
         }
 
+        // Generate teams and players
         $teams = collect();
         $players = collect();
         for($i=0; $i < 10; $i++) {
@@ -49,6 +44,7 @@ class DatabaseSeeder extends Seeder
             $teams->add($team);
         }
 
+        // Generate games and events
         for ($i=0; $i < 30; $i++) {
             do {
                 $team1 = $teams->random();
@@ -60,9 +56,10 @@ class DatabaseSeeder extends Seeder
                 'away_team_id' => $team2->id
             ]);
             $players = collect();
-            $players->add($team1->players);
-            $players->add($team2->players);
-            echo($players->random()->random());
+            for ($j=0; $j < 11; $j++) {
+                $players->add($team1->players[$j]);
+                $players->add($team2->players[$j]);
+            }
             for ($j=0; $j < rand(3, 15); $j++) {
                 Event::factory()->create([
                     'player_id' => $players->random()->id,
@@ -70,7 +67,5 @@ class DatabaseSeeder extends Seeder
                 ]);
             }
         }
-
-
     }
 }
