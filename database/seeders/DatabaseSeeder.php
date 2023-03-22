@@ -19,6 +19,8 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        define('TEAM_COUNT',30);
+
         // Generate users
         $users = collect();
         $users->add(User::factory()->create([
@@ -33,13 +35,12 @@ class DatabaseSeeder extends Seeder
 
         // Generate teams and players
         $teams = collect();
-        $players = collect();
-        for($i=0; $i < 10; $i++) {
+        for($i=0; $i < TEAM_COUNT; $i++) {
             $team = Team::factory()->create();
             for ($j=0; $j < 11; $j++) {
-                $players->add(Player::factory()->create([
+                Player::factory()->create([
                     'team_id' => $team->id,
-                ]));
+                ]);
             }
             $teams->add($team);
         }
@@ -66,6 +67,13 @@ class DatabaseSeeder extends Seeder
                     'game_id' => $game->id
                 ]);
             }
+        }
+
+        //Generate favourites
+        foreach ($users as $u) {
+            $u->teams()->attach($teams->random(rand(1,9))->map(function($e){
+                return $e->id;
+            }));
         }
     }
 }

@@ -10,7 +10,8 @@
         "laravel/framework": "^10.0",
         "laravel/sanctum": "^3.2",
         "laravel/tinker": "^2.8",
-        "lonniecoffman/faker-team-names": "^1.0"
+        "lonniecoffman/faker-team-names": "^1.0",
+        "martinlindhe/php-mb-helpers": "^0.1.7"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",

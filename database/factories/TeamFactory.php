@@ -16,11 +16,11 @@ class TeamFactory extends Factory
      */
     public function definition(): array
     {
-        $teamName = fake()->teamName();
+        $teamName = fake()->unique()->city();
 
         return [
             'name' => $teamName,
-            'shortname' => strtoupper(substr($teamName, 0, rand(2,4))),
+            'shortname' => mb_strtoupper(collect(mb_str_split($teamName))->random(rand(3, (strlen($teamName) > 4 ? 4 : 3)))->implode('')),
             'image' => fake()->imageUrl(),
         ];
     }
