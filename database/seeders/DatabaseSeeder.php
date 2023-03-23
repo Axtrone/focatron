@@ -19,7 +19,10 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        define('TEAM_COUNT',30);
+        define('TEAM_COUNT',12);
+        define('USER_COUNT',20);
+        define('PLAYER_COUNT',11);
+        define('GAME_COUNT', 30);
 
         // Generate users
         $users = collect();
@@ -27,7 +30,7 @@ class DatabaseSeeder extends Seeder
             'email' => 'admin@szerveroldali.hu',
             'password' => Hash::make("admin")
         ]));
-        for($i = 1; $i <= 20; $i++){
+        for($i = 1; $i <= USER_COUNT; $i++){
             $users -> add(User::factory()->create([
                 'email' => 'user' . $i . '@szerveroldali.hu',
             ]));
@@ -37,7 +40,7 @@ class DatabaseSeeder extends Seeder
         $teams = collect();
         for($i=0; $i < TEAM_COUNT; $i++) {
             $team = Team::factory()->create();
-            for ($j=0; $j < 11; $j++) {
+            for ($j=0; $j < PLAYER_COUNT; $j++) {
                 Player::factory()->create([
                     'team_id' => $team->id,
                 ]);
@@ -46,22 +49,15 @@ class DatabaseSeeder extends Seeder
         }
 
         // Generate games and events
-        for ($i=0; $i < 30; $i++) {
-            do {
-                $team1 = $teams->random();
-                $team2 = $teams->random();
-            } while ($team1 == $team2);
+        for ($i=0; $i < GAME_COUNT; $i++) {
+            $t = $teams->random(2);
 
             $game = Game::factory()->create([
-                'home_team_id' => $team1->id,
-                'away_team_id' => $team2->id
+                'home_team_id' => $t[0]->id,
+                'away_team_id' => $t[1]->id
             ]);
-            $players = collect();
-            for ($j=0; $j < 11; $j++) {
-                $players->add($team1->players[$j]);
-                $players->add($team2->players[$j]);
-            }
-            for ($j=0; $j < rand(3, 15); $j++) {
+            $players = collect($t[0]->players->merge($t[1]->players));
+            for ($j=0; $j < rand(1, 15); $j++) {
                 Event::factory()->create([
                     'player_id' => $players->random()->id,
                     'game_id' => $game->id
