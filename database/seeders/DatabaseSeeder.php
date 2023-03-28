@@ -25,7 +25,7 @@ class DatabaseSeeder extends Seeder
         $users = collect();
         $users->add(User::factory()->create([
             'email' => 'admin@szerveroldali.hu',
-            'password' => Hash::make("admin")
+            'password' => Hash::make("adminpwd")
         ]));
         for($i = 1; $i <= 20; $i++){
             $users -> add(User::factory()->create([
