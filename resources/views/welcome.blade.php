@@ -17,27 +17,31 @@
                 <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"></path></svg>
             </button>
             <div class="hidden w-full md:block md:w-auto md:mx-auto" id="navbar-dropdown">
-                <ul class="bg-opacity-50 flex flex-col font-medium p-4 mt-4 border border-gray-100 rounded-lg bg-gray-100 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-gray-400 md:bg-opacity-50 md:rounded-3xl md:shadow-lg md:shadow-red-500 md:px-8">
-                {{-- <li>
-                    <a href="#" class="block py-2 pl-3 pr-4 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0" aria-current="page">Home</a>
-                </li> --}}
+                <ul class="bg-opacity-50 flex flex-col font-medium p-4 mt-4 border border-gray-100 rounded-lg bg-gray-100 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-gray-400 md:bg-opacity-50 md:rounded-3xl md:shadow-lg md:shadow-green-500 md:px-8"> {{--md:shadow-red-500--}}
                 <li>
-                    <a href="#" class="block py-2 pl-3 pr-4 text-gray-900 font-bold rounded md:hover:bg-transparent md:border-0 md:p-0 hover:bg-gray-700 hover:text-white">Mérkőzések</a>
+                    <a href="{{ route('games.index') }}" class="text-lg block py-2 pl-3 pr-4 text-gray-900 font-bold rounded md:hover:bg-transparent md:border-0 md:p-0 hover:bg-gray-700 hover:text-white">Mérkőzések</a>
                 </li>
                 <li>
-                    <a href="#" class="block py-2 pl-3 pr-4 text-gray-900 font-bold rounded md:hover:bg-transparent md:border-0 md:p-0 hover:bg-gray-700 hover:text-white">Csapatok</a>
+                    <a href="#" class="text-lg block py-2 pl-3 pr-4 text-gray-900 font-bold rounded md:hover:bg-transparent md:border-0 md:p-0 hover:bg-gray-700 hover:text-white">Csapatok</a>
                 </li>
                 <li>
-                    <a href="#" class="block py-2 pl-3 pr-4 text-gray-900 font-bold rounded md:hover:bg-transparent md:border-0 md:p-0 hover:bg-gray-700 hover:text-white">Tabella</a>
+                    <a href="#" class="text-lg block py-2 pl-3 pr-4 text-gray-900 font-bold rounded md:hover:bg-transparent md:border-0 md:p-0 hover:bg-gray-700 hover:text-white">Tabella</a>
                 </li>
                 <li>
-                    <a href="#" class="block py-2 pl-3 pr-4 text-gray-900 font-bold rounded md:hover:bg-transparent md:border-0 md:p-0 hover:bg-gray-700 hover:text-white">Kedvenceim</a>
+                    <a href="#" class="text-lg block py-2 pl-3 pr-4 text-gray-900 font-bold rounded md:hover:bg-transparent md:border-0 md:p-0 hover:bg-gray-700 hover:text-white">Kedvenceim</a>
                 </li>
                 </ul>
             </div>
             </div>
         </nav>
 
-        <h1 class="mt-6 text-center text-4xl font-semibold">Foca bajnokság</h1>
+        <div class="container mx-auto max-w-md">
+            <div class="bg-gray-400 bg-opacity-50 m-2 rounded-xl text-center p-4 mt-0 md:mt-10">
+                <h1 class="text-4xl font-semibold font-mono">Focatron</h1>
+                <p>Üdvözöllek a <strong>Focatron hivatalos weboldalán</strong>.</p>
+                <p class="text-justify">Cégünk 2009-ban alakult, a digitális forradalom elején. Célunk azóta is a magyar futball <strong>digitalizációja</strong>, egy kényelmes internetes tér nyújtása a sportág rajongóinak</p>
+                <p class="italic mt-2">Kérlek válassz menüpontot a <strong>fenti lehetőségek</strong> közül.</p>
+            </div>
+        </div>
     </body>
 </html>
