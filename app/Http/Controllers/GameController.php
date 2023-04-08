@@ -12,7 +12,8 @@ class GameController extends Controller
      */
     public function index()
     {
-        return view('games.index');
+        $games = Game::with(['home_team', 'away_team'])->orderBy('start')->get();
+        return view('games.index', ['games' => $games]);
     }
 
     /**
