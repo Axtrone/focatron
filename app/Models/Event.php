@@ -18,7 +18,7 @@ class Event extends Model
     {
         return $this->belongsTo(Game::class);
     }
-    public function plyer()
+    public function player()
     {
         return $this->belongsTo(Player::class);
     }

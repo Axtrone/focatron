@@ -16,11 +16,11 @@ class GameFactory extends Factory
      */
     public function definition(): array
     {
-        $start = fake()->dateTimeBetween('-1 years', '+3 months');
+        $start = fake()->dateTimeBetween('-1 years', '+6 months');
 
         return [
             'start' => $start,
-            'finished' => ($start < now() ? true : false),
+            'finished' => ($start->modify('+90 minutes') < now() ? true : false),
         ];
     }
 }

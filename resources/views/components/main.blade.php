@@ -17,7 +17,7 @@
             {{ $slot }}
         </div>
 
-        <footer class="rounded-lg border-t border-gray-300 pt-2">
+        <footer class="rounded-lg border-t border-gray-300 py-2">
                 <span class="block text-sm text-gray-500 text-center dark:text-gray-400">© 2023 <strong>Varga Bence</strong></span>
             </div>
         </footer>

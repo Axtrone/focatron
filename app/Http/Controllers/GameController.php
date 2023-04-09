@@ -4,16 +4,30 @@ namespace App\Http\Controllers;
 
 use App\Models\Game;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class GameController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $games = Game::with(['home_team', 'away_team'])->orderBy('start')->get();
-        return view('games.index', ['games' => $games]);
+        $live_games = Game::where([['start', '<=',  now()], ['finished', false]])->get();
+        $games = Game::with(['home_team', 'away_team', 'events.player.team'])->orderBy('start')->get()->diff($live_games);
+
+        if($request->get('p') == null) $page = ceil($games->search(fn($p) => $p->finished == false) / 10);
+        else $page = $request->get('p');
+
+        $paginated = new LengthAwarePaginator(
+            $games->forPage($page, 10),
+            $games->count(),
+            10,
+            $page,
+            ['path' => route('games.index'), 'pageName' => 'p'],
+        );
+
+        return view('games.index', ['games' => $paginated, 'live_games' => $live_games]);
     }
 
     /**
