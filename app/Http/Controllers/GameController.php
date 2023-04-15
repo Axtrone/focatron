@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Game;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 class GameController extends Controller
@@ -51,7 +52,11 @@ class GameController extends Controller
      */
     public function show(Game $game)
     {
-        //
+        $game->load('events', 'events.player', 'events.player.team');
+        $game->events = array_values(Arr::sort($game->events, function ($value) {
+            return $value->minute;
+        }));
+        return view('games.show', ['g' => $game]);
     }
 
     /**
