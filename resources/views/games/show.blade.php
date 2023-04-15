@@ -26,21 +26,64 @@
         @if ($g->start < now())
             <h2 class="text-xl font-bold font-sans mt-6 ms-3 mb-2 md:text-2xl md:mt-11 md:text-center">Események</h2>
             <div class="mx-auto max-w-xl relative">
-            @foreach ($g->events as $e)
-                <div class="mx-2 p-4 mb-2 bg-white border border-gray-200 rounded-lg shadow flex flex-row items-center justify-between">
-                    <div>
-                        <p><i class="fa-solid fa-user me-2 mb-2"></i>{{ $e->player->name }} <span class="italic">({{ $e->player->team->name }})</span></p>
-                        <p><i class="fa-solid fa-t me-2 mb-2"></i>{{ __($e->type) }}</p>
-                        <p><i class="fa-regular fa-clock me-2 mb-2"></i>{{ $e->minute }}`</p>
+                @foreach ($g->events as $e)
+                    <div class="mx-2 p-4 mb-2 bg-white border border-gray-200 rounded-lg shadow flex flex-row items-center justify-between">
+                        <div>
+                            <p><i class="fa-solid fa-user me-2 mb-2"></i><span class="text-lg">{{ $e->player->name }}</span> <span class="italic">({{ $e->player->team->name }})</span></p>
+                            <p><i class="fa-solid fa-t me-2 mb-2"></i>{{ __($e->type) }}</p>
+                            <p><i class="fa-regular fa-clock me-2 mb-2"></i>{{ $e->minute }}`</p>
+                        </div>
+                        <img src="/images/{{ $e->type }}.svg" class="max-h-20 me-2">
                     </div>
-                    <img src="/images/{{ $e->type }}.svg" class="max-h-20 me-2">
-                </div>
-            @endforeach
-            {{-- TODO: Csak admin láthatja --}}
-            <div class="flex justify-center">
-                <button type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mt-2"><i class="fa-solid fa-plus me-2"></i>Új esemény rögzítése</button>
-            </div>
+                @endforeach
 
+                {{-- TODO: Csak admin láthatja --}}
+                <x-new-event-modal open="{{isset($modalOpen) ? $modalOpen : 'false' }}">
+                    <form class="mt-5">
+                        <input type="hidden" id="game" name="game" value="{{ $g->id }}">
+
+                        <div>
+                            <x-input-label for="minute" value="Perc" class="text-lg" />
+                            <x-text-input id="minute" class="block mt-1 w-full" type="number" name="minute" :value="old('minute')" autofocus />
+                            <x-input-error :messages="$errors->get('email')" class="mt-2" />
+                        </div>
+
+                        <div class="mt-3">
+                            <x-input-label for="type" value="Esemény típusa" class="text-lg" />
+                            <select id="type" class="block mt-1 w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm" name="type">
+                                <option value="goal">Gól</option>
+                                <option value="own_goal">Öngól</option>
+                                <option value="yellow_card">Sárga lap</option>
+                                <option value="red_card">Piros lap</option>
+                            </select>
+                            <x-input-error :messages="$errors->get('type')" class="mt-2" />
+                        </div>
+
+                        <div class="mt-3">
+                            <x-input-label for="player" value="Játékos" class="text-lg" />
+                            <select id="player" class="block mt-1 w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm" name="player">
+                                @forelse ($g->home_team->players as $p)
+                                    <option value="{{ $p->id }}"><span class="italic">({{ $p->number }}) </span>{{ $p->name }}</option>
+                                @empty
+                                    <option value="error">Nincsenek játékosok</option>
+                                @endforelse
+                                <option disabled role=separator>----------------------------</option>
+                                @forelse ($g->away_team->players as $p)
+                                <option value="{{ $p->id }}"><span class="italic">({{ $p->number }}) </span>{{ $p->name }}</option>
+                                @empty
+                                    <option value="error">Nincsenek játékosok</option>
+                                @endforelse
+                            </select>
+                            <x-input-error :messages="$errors->get('type')" class="mt-2" />
+                        </div>
+
+                        <div class="flex justify-end mt-6">
+                            <button type="submit" class="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
+                                Mentés
+                            </button>
+                        </div>
+                    </form>
+                </x-new-event-modal>
             </div>
         @else
             <h2 class="text-xl font-bold font-sans mt-6 text-center mb-2 italic">Az esemény még nem kezdődött el!</h2>

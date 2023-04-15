@@ -53,10 +53,20 @@ class GameController extends Controller
     public function show(Game $game)
     {
         $game->load('events', 'events.player', 'events.player.team');
+
         $game->events = array_values(Arr::sort($game->events, function ($value) {
             return $value->minute;
         }));
-        return view('games.show', ['g' => $game]);
+
+        $game->home_team->players = array_values(Arr::sort($game->home_team->players, function ($value) {
+            return $value->number;
+        }));
+        $game->away_team->players = array_values(Arr::sort($game->away_team->players, function ($value) {
+            return $value->number;
+        }));
+
+
+        return view('games.show', ['g' => $game, "modalOpen" => true]); // "modalOpen" => true
     }
 
     /**
