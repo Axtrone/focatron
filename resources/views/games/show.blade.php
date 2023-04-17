@@ -34,56 +34,67 @@
                             <p><i class="fa-regular fa-clock me-2 mb-2"></i>{{ $e->minute }}`</p>
                         </div>
                         <img src="/images/{{ $e->type }}.svg" class="max-h-20 me-2">
+                        @can('delete',[\App\Event::class, $e, $g])
+                        <form action="{{ route('events.destroy', ['event' => $e]) }}" method="POST">
+                            @method('DELETE')
+                            @csrf
+                            <input type="hidden" id="game_id" name="game_id" value="{{ $g->id }}">
+                            <button type="submit" class="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
+                        </form>
+                        @endcan
                     </div>
                 @endforeach
+                @can('create', [\App\Event::class, $g])
+                    <x-new-event-modal open="{{ count($errors) == 0 ? 'false' : 'true' }}">
+                        <form class="mt-5" method="POST" action="{{ route('events.store') }}">
+                            <input type="hidden" id="game_id" name="game_id" value="{{ $g->id }}">
+                            @csrf
 
-                {{-- TODO: Csak admin láthatja --}}
-                <x-new-event-modal open="{{isset($modalOpen) ? $modalOpen : 'false' }}">
-                    <form class="mt-5">
-                        <input type="hidden" id="game" name="game" value="{{ $g->id }}">
+                            <div>
+                                <x-input-label for="minute" value="Perc" class="text-lg" />
+                                <x-text-input id="minute" class="block mt-1 w-full" type="number" name="minute" :value="old('minute')" autofocus min='0' max='90' />
+                                <x-input-error :messages="$errors->get('minute')" class="mt-2" />
+                            </div>
 
-                        <div>
-                            <x-input-label for="minute" value="Perc" class="text-lg" />
-                            <x-text-input id="minute" class="block mt-1 w-full" type="number" name="minute" :value="old('minute')" autofocus />
-                            <x-input-error :messages="$errors->get('email')" class="mt-2" />
-                        </div>
+                            <div class="mt-3">
+                                <x-input-label for="type" value="Esemény típusa" class="text-lg" />
+                                <select id="type" class="block mt-1 w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm" name="type">
+                                    <option value="goal">Gól</option>
+                                    <option value="own_goal">Öngól</option>
+                                    <option value="yellow_card">Sárga lap</option>
+                                    <option value="red_card">Piros lap</option>
+                                </select>
+                                <x-input-error :messages="$errors->get('type')" class="mt-2" />
+                            </div>
 
-                        <div class="mt-3">
-                            <x-input-label for="type" value="Esemény típusa" class="text-lg" />
-                            <select id="type" class="block mt-1 w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm" name="type">
-                                <option value="goal">Gól</option>
-                                <option value="own_goal">Öngól</option>
-                                <option value="yellow_card">Sárga lap</option>
-                                <option value="red_card">Piros lap</option>
-                            </select>
-                            <x-input-error :messages="$errors->get('type')" class="mt-2" />
-                        </div>
-
-                        <div class="mt-3">
-                            <x-input-label for="player" value="Játékos" class="text-lg" />
-                            <select id="player" class="block mt-1 w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm" name="player">
-                                @forelse ($g->home_team->players as $p)
+                            <div class="mt-3">
+                                <x-input-label for="player" value="Játékos" class="text-lg" />
+                                <select id="player_id" class="block mt-1 w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm" name="player_id">
+                                    @forelse ($g->home_team->players as $p)
+                                        <option value="{{ $p->id }}"><span class="italic">({{ $p->number }}) </span>{{ $p->name }}</option>
+                                    @empty
+                                        <option value="error">Nincsenek játékosok</option>
+                                    @endforelse
+                                    <option disabled role=separator>----------------------------</option>
+                                    @forelse ($g->away_team->players as $p)
                                     <option value="{{ $p->id }}"><span class="italic">({{ $p->number }}) </span>{{ $p->name }}</option>
-                                @empty
-                                    <option value="error">Nincsenek játékosok</option>
-                                @endforelse
-                                <option disabled role=separator>----------------------------</option>
-                                @forelse ($g->away_team->players as $p)
-                                <option value="{{ $p->id }}"><span class="italic">({{ $p->number }}) </span>{{ $p->name }}</option>
-                                @empty
-                                    <option value="error">Nincsenek játékosok</option>
-                                @endforelse
-                            </select>
-                            <x-input-error :messages="$errors->get('type')" class="mt-2" />
-                        </div>
+                                    @empty
+                                        <option value="error">Nincsenek játékosok</option>
+                                    @endforelse
+                                </select>
+                                <x-input-error :messages="$errors->get('player_id')" class="mt-2" />
+                            </div>
 
-                        <div class="flex justify-end mt-6">
-                            <button type="submit" class="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
-                                Mentés
-                            </button>
-                        </div>
-                    </form>
-                </x-new-event-modal>
+                            <div class="flex justify-end mt-6">
+                                <button type="submit" class="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
+                                    Mentés
+                                </button>
+                            </div>
+                        </form>
+                    </x-new-event-modal>
+                @endcan
             </div>
         @else
             <h2 class="text-xl font-bold font-sans mt-6 text-center mb-2 italic">Az esemény még nem kezdődött el!</h2>

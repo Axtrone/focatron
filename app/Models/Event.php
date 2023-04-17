@@ -10,6 +10,8 @@ class Event extends Model
     protected $fillable = [
         'type',
         'minute',
+        'game_id',
+        'player_id'
     ];
 
     use HasFactory;

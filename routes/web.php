@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\GameController;
+use App\Http\Controllers\EventController;
 use App\Http\Controllers\ProfileController;
 
 /*
@@ -20,6 +21,7 @@ Route::get('/', function () {
 })->name('welcome');
 
 Route::resource('games', GameController::class);
+Route::resource('events', EventController::class);
 
 Route::get('/dashboard', function () {
     return view('dashboard');

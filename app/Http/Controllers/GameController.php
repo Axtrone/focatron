@@ -65,8 +65,7 @@ class GameController extends Controller
             return $value->number;
         }));
 
-
-        return view('games.show', ['g' => $game, "modalOpen" => true]); // "modalOpen" => true
+        return view('games.show', ['g' => $game]);
     }
 
     /**
