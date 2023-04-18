@@ -71,5 +71,9 @@
     <div class="mx-auto">
         {{ $games->links() }}
     </div>
+
+    <a href="{{ route('games.create') }}" class="fixed z-90 bottom-10 right-8 bg-blue-600 w-14 h-14 rounded-full drop-shadow-lg flex justify-center items-center text-white text-xl hover:bg-blue-700 hover:drop-shadow-2xl">
+          <i class="fa-solid fa-plus text-white"></i>
+    </a>
 </div>
 </x-main>

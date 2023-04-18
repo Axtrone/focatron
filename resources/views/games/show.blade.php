@@ -94,6 +94,11 @@
                             </div>
                         </form>
                     </x-new-event-modal>
+                    <div class="flex justify-center my-3">
+                        <button type="button" class="text-white bg-red-700 hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-full text-sm px-5 py-2.5 text-center">
+                            <span><i class="fa-solid fa-xmark me-2"></i>Meccs lezárása</span>
+                        </button>
+                    </div>
                 @endcan
             </div>
         @else
