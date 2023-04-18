@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Game;
+use App\Models\Team;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -36,7 +37,10 @@ class GameController extends Controller
      */
     public function create()
     {
-        //
+        $this -> authorize('create', Game::class);
+
+        $teams = Team::get();
+        return view('games.create', ['teams' => $teams]);
     }
 
     /**
@@ -44,7 +48,24 @@ class GameController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this -> authorize('create', Game::class);
+
+        $validated = $request->validate([
+            'home_team_id'  => 'required|integer|exists:teams,id|different:away_team_id',
+            'away_team_id'  => 'required|integer|exists:teams,id|different:home_team_id',
+            'start'         => 'required|date|after:now',
+        ],
+        [
+            'away_team_id.different' => 'A két csapat nem egyezhet meg!',
+            'home_team_id.different' => 'A két csapat nem egyezhet meg!',
+            'start.after'            => 'A dátumnak a jovőben kell lennie!'
+        ]);
+
+        $validated['finished'] = false;
+
+        Game::create($validated);
+
+        return to_route('games.index');
     }
 
     /**
@@ -90,5 +111,12 @@ class GameController extends Controller
     public function destroy(Game $game)
     {
         //
+    }
+
+    public function close(Game $game){
+        $this->authorize('create', Game::class);
+        $game->finished = true;
+        $game->save();
+        return to_route('games.show', ['game' => $game]);
     }
 }

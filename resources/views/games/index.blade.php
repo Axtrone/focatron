@@ -4,7 +4,7 @@
     @if(!$live_games->isEmpty())
     {{-- Actual games --}}
     <div id="current" class="border-2 border-red-600  mx-0.5 rounded-lg relative">
-        <h2 class="absolute left-5 -top-4 px-1 bg-white text-red-600 font-semibold italic">Aktuális</h2>
+        <h2 class="absolute left-5 -top-4 px-1 bg-gray-100 text-red-600 font-semibold italic">Aktuális</h2>
         @foreach ($live_games as $lg)
             {{-- Card --}}
             <a href="{{ route('games.show', ['game' => $lg]) }}" class="my-4 p-3 mx-1 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 flex flex-row gap-2">
@@ -72,8 +72,11 @@
         {{ $games->links() }}
     </div>
 
-    <a href="{{ route('games.create') }}" class="fixed z-90 bottom-10 right-8 bg-blue-600 w-14 h-14 rounded-full drop-shadow-lg flex justify-center items-center text-white text-xl hover:bg-blue-700 hover:drop-shadow-2xl">
-          <i class="fa-solid fa-plus text-white"></i>
-    </a>
+    @can('create', \App\Game::class)
+        <a href="{{ route('games.create') }}" class="fixed z-90 bottom-10 right-8 bg-blue-600 w-14 h-14 rounded-full drop-shadow-lg flex justify-center items-center text-white text-xl hover:bg-blue-700 hover:drop-shadow-2xl">
+            <i class="fa-solid fa-plus text-white"></i>
+        </a>
+    @endcan
+
 </div>
 </x-main>

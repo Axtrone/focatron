@@ -41,9 +41,6 @@ class EventController extends Controller
             'minute.required' => 'A perc megadása kötelező!'
         ]);
 
-        // $validated['player_id'] = intval($validated['player_id']);
-        // $validated['game_id'] = intval($validated['game_id']);
-
         Event::create($validated);
 
         return to_route('games.show', ['game' => $validated['game_id']]);

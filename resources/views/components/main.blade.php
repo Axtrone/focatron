@@ -13,13 +13,15 @@
     <body>
         @include('layouts.navigation')
 
-        <div class="container my-5 max-w-6xl mx-auto">
-            {{ $slot }}
-        </div>
-
-        <footer class="rounded-lg border-t border-gray-300 py-2">
-                <span class="block text-sm text-gray-500 text-center dark:text-gray-400">© 2023 <strong>Varga Bence</strong></span>
+        <div class="min-h-screen bg-gray-100">
+            <div class="container py-5 max-w-6xl mx-auto">
+                {{ $slot }}
             </div>
-        </footer>
+
+            <footer class="rounded-lg border-t border-gray-300 py-2">
+                    <span class="block text-sm text-gray-500 text-center dark:text-gray-400">© 2023 <strong>Varga Bence</strong></span>
+                </div>
+            </footer>
+        </div>
     </body>
 </html>

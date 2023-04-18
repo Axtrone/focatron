@@ -23,6 +23,8 @@ Route::get('/', function () {
 Route::resource('games', GameController::class);
 Route::resource('events', EventController::class);
 
+Route::post('games/{game}/close', [GameController::class, 'close'])->name('games.close');
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');

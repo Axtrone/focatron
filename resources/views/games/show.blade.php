@@ -61,10 +61,10 @@
                             <div class="mt-3">
                                 <x-input-label for="type" value="Esemény típusa" class="text-lg" />
                                 <select id="type" class="block mt-1 w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm" name="type">
-                                    <option value="goal">Gól</option>
-                                    <option value="own_goal">Öngól</option>
-                                    <option value="yellow_card">Sárga lap</option>
-                                    <option value="red_card">Piros lap</option>
+                                    <option {{ old('type') == 'goal' ? "selected" : "" }} value="goal">Gól</option>
+                                    <option {{ old('type') == 'own_goal' ? "selected" : "" }} value="own_goal">Öngól</option>
+                                    <option {{ old('type') == 'yellow_card' ? "selected" : "" }} value="yellow_card">Sárga lap</option>
+                                    <option {{ old('type') == 'red_card' ? "selected" : "" }} value="red_card">Piros lap</option>
                                 </select>
                                 <x-input-error :messages="$errors->get('type')" class="mt-2" />
                             </div>
@@ -73,13 +73,13 @@
                                 <x-input-label for="player" value="Játékos" class="text-lg" />
                                 <select id="player_id" class="block mt-1 w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm" name="player_id">
                                     @forelse ($g->home_team->players as $p)
-                                        <option value="{{ $p->id }}"><span class="italic">({{ $p->number }}) </span>{{ $p->name }}</option>
+                                        <option {{ old('player_id') == $p->id ? "selected" : "" }} value="{{ $p->id }}"><span class="italic">({{ $p->number }}) </span>{{ $p->name }}</option>
                                     @empty
                                         <option value="error">Nincsenek játékosok</option>
                                     @endforelse
                                     <option disabled role=separator>----------------------------</option>
                                     @forelse ($g->away_team->players as $p)
-                                    <option value="{{ $p->id }}"><span class="italic">({{ $p->number }}) </span>{{ $p->name }}</option>
+                                        <option {{ old('player_id') == $p->id ? "selected" : "" }} value="{{ $p->id }}"><span class="italic">({{ $p->number }}) </span>{{ $p->name }}</option>
                                     @empty
                                         <option value="error">Nincsenek játékosok</option>
                                     @endforelse
@@ -95,9 +95,12 @@
                         </form>
                     </x-new-event-modal>
                     <div class="flex justify-center my-3">
-                        <button type="button" class="text-white bg-red-700 hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-full text-sm px-5 py-2.5 text-center">
-                            <span><i class="fa-solid fa-xmark me-2"></i>Meccs lezárása</span>
-                        </button>
+                        <form action="{{ route('games.close', ['game' => $g])}}" method="POST">
+                            @csrf
+                            <button type="submit" class="text-white bg-red-700 hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-full text-sm px-5 py-2.5 text-center">
+                                <span><i class="fa-solid fa-xmark me-2"></i>Meccs lezárása</span>
+                            </button>
+                        </form>
                     </div>
                 @endcan
             </div>
