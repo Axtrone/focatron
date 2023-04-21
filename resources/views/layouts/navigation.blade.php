@@ -15,7 +15,7 @@
                     <x-nav-link :href="route('games.index')" :active="request()->routeIs('games.index')">
                         Mérkőzések
                     </x-nav-link>
-                    <x-nav-link :href="route('welcome')">
+                    <x-nav-link :href="route('teams.index')" :active="request()->routeIs('teams.index')">
                         Csapatok
                     </x-nav-link>
                     <x-nav-link>
@@ -88,7 +88,7 @@
             <x-responsive-nav-link :href="route('games.index')" :active="request()->routeIs('games.index')">
                 Mérkőzések
             </x-responsive-nav-link>
-            <x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('teams.index')" :active="request()->routeIs('teams.index')">
                 Csapatok
             </x-responsive-nav-link>
             <x-responsive-nav-link>

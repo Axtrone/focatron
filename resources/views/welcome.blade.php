@@ -22,7 +22,7 @@
                     <a href="{{ route('games.index') }}" class="text-lg block py-2 pl-3 pr-4 text-gray-900 font-bold rounded md:hover:bg-transparent md:border-0 md:p-0 hover:bg-gray-700 hover:text-white">Mérkőzések</a>
                 </li>
                 <li>
-                    <a href="#" class="text-lg block py-2 pl-3 pr-4 text-gray-900 font-bold rounded md:hover:bg-transparent md:border-0 md:p-0 hover:bg-gray-700 hover:text-white">Csapatok</a>
+                    <a href="{{ route('teams.index') }}" class="text-lg block py-2 pl-3 pr-4 text-gray-900 font-bold rounded md:hover:bg-transparent md:border-0 md:p-0 hover:bg-gray-700 hover:text-white">Csapatok</a>
                 </li>
                 <li>
                     <a href="#" class="text-lg block py-2 pl-3 pr-4 text-gray-900 font-bold rounded md:hover:bg-transparent md:border-0 md:p-0 hover:bg-gray-700 hover:text-white">Tabella</a>

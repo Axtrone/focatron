@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\GameController;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\TeamController;
 use App\Http\Controllers\ProfileController;
 
 /*
@@ -22,6 +23,7 @@ Route::get('/', function () {
 
 Route::resource('games', GameController::class);
 Route::resource('events', EventController::class);
+Route::resource('teams', TeamController::class);
 
 Route::post('games/{game}/close', [GameController::class, 'close'])->name('games.close');
 
