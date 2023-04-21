@@ -94,7 +94,10 @@ class GameController extends Controller
      */
     public function edit(Game $game)
     {
-        //
+        $this -> authorize('edit', Game::class);
+
+        $teams = Team::get();
+        return view('games.edit', ['teams' => $teams, 'g' => $game]);
     }
 
     /**
@@ -102,7 +105,22 @@ class GameController extends Controller
      */
     public function update(Request $request, Game $game)
     {
-        //
+        $this -> authorize('edit', Game::class);
+
+        $validated = $request->validate([
+            'home_team_id'  => 'required|integer|exists:teams,id|different:away_team_id',
+            'away_team_id'  => 'required|integer|exists:teams,id|different:home_team_id',
+            'start'         => 'required|date',
+        ],
+        [
+            'away_team_id.different' => 'A két csapat nem egyezhet meg!',
+            'home_team_id.different' => 'A két csapat nem egyezhet meg!'
+        ]);
+
+
+        $game->update($validated);
+
+        return to_route('games.index');
     }
 
     /**
@@ -110,7 +128,9 @@ class GameController extends Controller
      */
     public function destroy(Game $game)
     {
-        //
+        $this->authorize('delete', Game::class);
+        $game->delete();
+        return to_route('games.index');
     }
 
     public function close(Game $game){

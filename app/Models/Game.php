@@ -17,10 +17,10 @@ class Game extends Model
     use HasFactory;
 
     public function home_team(){
-        return $this->belongsTo(Team::class);
+        return $this->belongsTo(Team::class, 'home_team_id');
     }
     public function away_team(){
-        return $this->belongsTo(Team::class);
+        return $this->belongsTo(Team::class, 'away_team_id');
     }
     public function events(){
         return $this->hasMany(Event::class);

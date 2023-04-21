@@ -10,7 +10,7 @@
                 </div>
             </div>
             <div class="basis-1/7 text-center flex flex-col justify-between">
-                <p class="text-2xl font-bold italic font-serif">{{ $g->finished ? $g->results['home_team'] . " - " . $g->results['away_team'] : "VS" }}</p>
+                <p class="text-2xl font-bold italic font-serif">{{ $g->start < now() ? $g->results['home_team'] . " - " . $g->results['away_team'] : "VS" }}</p>
                 <p class="">{{ date_format(date_create($g->start), 'Y.m.d') }}</p>
                 <p class="font-bold align-bottom">{{ date_format(date_create($g->start), 'H:i') }}</p>
             </div>
@@ -24,7 +24,7 @@
         </div>
 
         @if ($g->start < now())
-            <h2 class="text-xl font-bold font-sans mt-6 ms-3 mb-2 md:text-2xl md:mt-11 md:text-center">Események</h2>
+            <h2 class="text-xl font-bold font-sans mt-6 ms-3 md:ms-0 mb-2 md:text-2xl md:mt-11 md:text-center">Események</h2>
             <div class="mx-auto max-w-xl relative">
                 @foreach ($g->events as $e)
                     <div class="mx-2 p-4 mb-2 bg-white border border-gray-200 rounded-lg shadow flex flex-row items-center justify-between">

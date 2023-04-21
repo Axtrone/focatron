@@ -7,32 +7,70 @@
         <h2 class="absolute left-5 -top-4 px-1 bg-gray-100 text-red-600 font-semibold italic">Aktuális</h2>
         @foreach ($live_games as $lg)
             {{-- Card --}}
-            <a href="{{ route('games.show', ['game' => $lg]) }}" class="my-4 p-3 mx-1 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 flex flex-row gap-2">
-                <div class="basis-2/5 text-center px-2 md:flex md:flex-row md:items-center">
-                    <span class="md:basis-1/2"><img class="rounded-lg h-16 w-18 mx-auto object-cover" src="{{ $lg->home_team->image ? $lg->home_team->image : "https://via.placeholder.com/840x480.png/?text=Logo" }}" alt="Logo"></span>
-                    <div class="md:basis-1/2">
-                        <h4 class="mt-1 font-bold font-mono md:text-xl md:justify-self-end">{{ $lg->home_team->name }}</h4>
-                        <h5 class="hidden md:inline font-semibold font-mono italic text-lg">{{ $lg->home_team->shortname }}</h5>
+            <div class="my-4 p-3 mx-1 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100">
+                <a href="{{ route('games.show', ['game' => $lg]) }}" class="flex flex-row gap-2">
+                    <div class="basis-3/5 text-center px-2 md:flex md:flex-row md:items-center">
+                        <span class="md:basis-1/2"><img class="rounded-lg h-16 w-18 mx-auto object-cover" src="{{ $lg->home_team->image ? $lg->home_team->image : "https://via.placeholder.com/840x480.png/?text=Logo" }}" alt="Logo"></span>
+                        <div class="md:basis-1/2">
+                            <h4 class="mt-1 font-bold font-mono md:text-xl md:justify-self-end">{{ $lg->home_team->name }}</h4>
+                            <h5 class="hidden md:inline font-semibold font-mono italic text-lg">{{ $lg->home_team->shortname }}</h5>
+                        </div>
+                    </div>
+                    <div class="text-center flex flex-col justify-between">
+                        <p class="text-2xl font-bold italic font-serif">{{ $lg->results['home_team'] }} - {{ $lg->results['away_team'] }}</p>
+                            <span class="flex items-center justify-center text-sm font-medium text-gray-900 relative">
+                            <span class="relative flex h-3 w-3 mr-1">
+                                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+                                <span class="relative inline-flex rounded-full h-3 w-3 bg-red-500"></span>
+                            </span>Élő</span>
+                        <p class="">{{ date_format(date_create($lg->start), 'Y.m.d') }}</p>
+                        <p class="font-bold align-bottom">{{ date_format(date_create($lg->start), 'H:i') }}</p>
+                    </div>
+                    <div class="basis-3/5 text-center px-2 md:flex md:flex-row md:items-center">
+                        <span class="md:basis-1/2"><img class="rounded-lg h-16 w-18 mx-auto object-cover" src="{{ $lg->away_team->image ? $lg->away_team->image : "https://via.placeholder.com/840x480.png/?text=Logo" }}" alt="Logo"></span>
+                        <div class="md:order-first md:basis-1/2">
+                            <h4 class="mt-1 font-bold font-mono md:text-xl">{{ $lg->away_team->name }}</h4>
+                            <h5 class="hidden md:inline font-semibold font-mono italic md:text-lg">{{ $lg->away_team->shortname }}</h5>
+                        </div>
+                    </div>
+                    @can('delete', \App\Game::class)
+                    <div class="basis-1/12 text-center px-2 md:flex md:flex-row md:items-center border-s-gray-600 border-s-2 hidden">
+                        <div class="flex flex-col justify-center content-center">
+                            <form action="{{ route('games.edit', ['game' => $lg]) }}" method="GET">
+                                <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2">
+                                    <i class="fa-regular fa-pen-to-square"></i>
+                                </button>
+                            </form>
+                            <form action="{{ route('games.destroy', ['game' => $lg]) }}" method="POST">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5">
+                                    <i class="fa-solid fa-trash"></i>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                    @endcan
+                </a>
+                @can('delete', \App\Game::class)
+                <div class="md:hidden block w-full mt-4">
+                    <div class="flex flex-row gap-4 content-center justify-items-center">
+                        <form action="{{ route('games.edit', ['game' => $lg]) }}" method="GET" class="basis-1/2 flex justify-end">
+                            <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5">
+                                <i class="fa-regular fa-pen-to-square me-2"></i>Módosítás
+                            </button>
+                        </form>
+                        <form action="{{ route('games.destroy', ['game' => $lg]) }}" method="POST" class="basis-1/2">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5">
+                                <i class="fa-solid fa-trash me-2"></i>Törlés
+                            </button>
+                        </form>
                     </div>
                 </div>
-                <div class="basis-1/5 text-center flex flex-col justify-between">
-                    <p class="text-2xl font-bold italic font-serif">{{ $lg->results['home_team'] }} - {{ $lg->results['away_team'] }}</p>
-                        <span class="flex items-center justify-center text-sm font-medium text-gray-900 relative">
-                        <span class="relative flex h-3 w-3 mr-1">
-                            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
-                            <span class="relative inline-flex rounded-full h-3 w-3 bg-red-500"></span>
-                        </span>Élő</span>
-                    <p class="">{{ date_format(date_create($lg->start), 'Y.m.d') }}</p>
-                    <p class="font-bold align-bottom">{{ date_format(date_create($lg->start), 'H:i') }}</p>
-                </div>
-                <div class="basis-2/5 text-center px-2 md:flex md:flex-row md:items-center">
-                    <span class="md:basis-1/2"><img class="rounded-lg h-16 w-18 mx-auto object-cover" src="{{ $lg->away_team->image ? $lg->away_team->image : "https://via.placeholder.com/840x480.png/?text=Logo" }}" alt="Logo"></span>
-                    <div class="md:order-first md:basis-1/2">
-                        <h4 class="mt-1 font-bold font-mono md:text-xl">{{ $lg->away_team->name }}</h4>
-                        <h5 class="hidden md:inline font-semibold font-mono italic md:text-lg">{{ $lg->away_team->shortname }}</h5>
-                    </div>
-                </div>
-            </a>
+                @endcan
+            </div>
         @endforeach
     </div>
     @endif
@@ -41,29 +79,67 @@
     <div>
         @forelse ($games as $g)
             {{-- Card --}}
-            <a href="{{ route('games.show', ['game' => $g]) }}" class="my-4 p-3 mx-1.5 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 flex flex-row gap-2">
-                <div class="basis-3/5 text-center px-2 md:flex md:flex-row md:items-center">
-                    <span class="md:basis-1/2"><img class="rounded-lg h-16 w-18 mx-auto object-cover" src="{{ $g->home_team->image ? $g->home_team->image : "https://via.placeholder.com/840x480.png/?text=Logo" }}" alt="Logo"></span>
-                    <div class="md:basis-1/2">
-                        <h4 class="mt-1 font-bold font-mono md:text-xl md:justify-self-end">{{ $g->home_team->name }}</h4>
-                        <h5 class="hidden md:inline font-semibold font-mono italic text-lg">{{ $g->home_team->shortname }}</h5>
+            <div class="my-4 p-3 mx-1 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100">
+                <a href="{{ route('games.show', ['game' => $g]) }}" class="flex flex-row gap-2">
+                    <div class="basis-3/5 text-center px-2 md:flex md:flex-row md:items-center">
+                        <span class="md:basis-1/2"><img class="rounded-lg h-16 w-18 mx-auto object-cover" src="{{ $g->home_team->image ? $g->home_team->image : "https://via.placeholder.com/840x480.png/?text=Logo" }}" alt="Logo"></span>
+                        <div class="md:basis-1/2">
+                            <h4 class="mt-1 font-bold font-mono md:text-xl md:justify-self-end">{{ $g->home_team->name }}</h4>
+                            <h5 class="hidden md:inline font-semibold font-mono italic text-lg">{{ $g->home_team->shortname }}</h5>
+                        </div>
+                    </div>
+                    <div class="text-center flex flex-col justify-between">
+                        <p class="text-2xl font-bold italic font-serif">{{ $g->start < now() ? ($g->results['home_team'] . " - " . $g->results['away_team']) : 'VS' }}</p>
+                        <p class="">{{ date_format(date_create($g->start), 'Y.m.d') }}</p>
+                        <p class="font-bold align-bottom">{{ date_format(date_create($g->start), 'H:i') }}</p>
+                    </div>
+                    <div class="basis-3/5 text-center px-2 md:flex md:flex-row md:items-center">
+                        <span class="md:basis-1/2"><img class="rounded-lg h-16 w-18 mx-auto object-cover" src="{{ $g->away_team->image ? $g->away_team->image : "https://via.placeholder.com/840x480.png/?text=Logo" }}" alt="Logo"></span>
+                        <div class="md:order-first md:basis-1/2">
+                            <h4 class="mt-1 font-bold font-mono md:text-xl">{{ $g->away_team->name }}</h4>
+                            <h5 class="hidden md:inline font-semibold font-mono italic md:text-lg">{{ $g->away_team->shortname }}</h5>
+                        </div>
+                    </div>
+                    @can('delete', \App\Game::class)
+                    <div class="basis-1/12 text-center px-2 md:flex md:flex-row md:items-center border-s-gray-600 border-s-2 hidden">
+                        <div class="flex flex-col justify-center content-center">
+                            <form action="{{ route('games.edit', ['game' => $g]) }}" method="GET">
+                                <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2">
+                                    <i class="fa-regular fa-pen-to-square"></i>
+                                </button>
+                            </form>
+                            <form action="{{ route('games.destroy', ['game' => $g]) }}" method="POST">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5">
+                                    <i class="fa-solid fa-trash"></i>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                    @endcan
+                </a>
+                @can('delete', \App\Game::class)
+                <div class="md:hidden block w-full mt-4">
+                    <div class="flex flex-row gap-4 content-center justify-items-center">
+                        <form action="{{ route('games.edit', ['game' => $g]) }}" method="GET" class="basis-1/2 flex justify-end">
+                            <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5">
+                                <i class="fa-regular fa-pen-to-square me-2"></i>Módosítás
+                            </button>
+                        </form>
+                        <form action="{{ route('games.destroy', ['game' => $g]) }}" method="POST" class="basis-1/2">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5">
+                                <i class="fa-solid fa-trash me-2"></i>Törlés
+                            </button>
+                        </form>
                     </div>
                 </div>
-                <div class="basis-1/7 text-center flex flex-col justify-between">
-                    <p class="text-2xl font-bold italic font-serif">{{ $g->finished ? $g->results['home_team'] . " - " . $g->results['away_team'] : "VS" }}</p>
-                    <p class="">{{ date_format(date_create($g->start), 'Y.m.d') }}</p>
-                    <p class="font-bold align-bottom">{{ date_format(date_create($g->start), 'H:i') }}</p>
-                </div>
-                <div class="basis-3/5 text-center px-2 md:flex md:flex-row md:items-center">
-                    <span class="md:basis-1/2"><img class="rounded-lg h-16 w-18 mx-auto object-cover" src="{{ $g->away_team->image ? $g->away_team->image : "https://via.placeholder.com/840x480.png/?text=Logo" }}" alt="Logo"></span>
-                    <div class="md:order-first md:basis-1/2">
-                        <h4 class="mt-1 font-bold font-mono md:text-xl">{{ $g->away_team->name }}</h4>
-                        <h5 class="hidden md:inline font-semibold font-mono italic md:text-lg">{{ $g->away_team->shortname }}</h5>
-                    </div>
-                </div>
-            </a>
+                @endcan
+            </div>
         @empty
-
+            <h1 class="text-2xl font-bold italic">Nincsenek meccsek!</h1>
         @endforelse
 
     </div>
