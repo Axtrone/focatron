@@ -1,5 +1,4 @@
 <x-main title="Új mérkőzés">
-<div class="">
     <h1 class="text-2xl md:text-3xl font-bold text-center mb-2">Új mérkőzés létrehozása</h1>
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
@@ -42,5 +41,4 @@
             </div>
         </div>
     </div>
-</div>
 </x-main>

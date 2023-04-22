@@ -10,6 +10,13 @@
                 <p class="font-bold font-mono text text-xl">{{ $t->name }}</p>
                 <p class="font-semibold font-mono italic text-lg">{{ $t->shortname }}</p>
             </div>
+            @can('update', \App\Team::class)
+            <div class="flex items-center">
+                <a href="{{ route('teams.edit', ['team' => $t]) }}" class="h-fit text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5">
+                    <i class="fa-regular fa-pen-to-square"></i>
+                </a>
+            </div>
+            @endcan
         </div>
         <div class="lg:flex lg:flex-row lg:gap-5">
             <div class="bg-white rounded-lg shadow-md p-2 text-center mt-5">

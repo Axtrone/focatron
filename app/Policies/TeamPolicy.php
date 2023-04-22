@@ -19,9 +19,9 @@ class TeamPolicy
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $u, Team $t)
+    public function update(User $u)
     {
-        //
+        return $u->is_admin;
     }
 
     /**

@@ -62,6 +62,7 @@ class GameController extends Controller
         ]);
 
         $validated['finished'] = false;
+        $validated['start'] = date_create($validated['start']);
 
         Game::create($validated);
 
@@ -117,7 +118,7 @@ class GameController extends Controller
             'home_team_id.different' => 'A két csapat nem egyezhet meg!'
         ]);
 
-
+        $validated['start'] = date_create($validated['start']);
         $game->update($validated);
 
         return to_route('games.index');

@@ -78,7 +78,8 @@ class TeamController extends Controller
      */
     public function edit(Team $team)
     {
-        //
+        $this->authorize('update', Team::class);
+        return view('teams.edit', ['t' =>$team]);
     }
 
     /**
@@ -86,7 +87,36 @@ class TeamController extends Controller
      */
     public function update(Request $request, Team $team)
     {
-        //
+        $this->authorize('update', Team::class);
+
+        $validated = $request->validate([
+            'name'      => 'required|string|unique:teams,name,' . $team->id,
+            'shortname' => 'required|string|max:4|unique:teams,shortname' . $team->id,
+            'image'     => 'nullable|image',
+        ],
+        [
+            'name.required'      => 'Név megadása kötelező!',
+            'name.string'        => 'A névnek szövegnek kell lennie!',
+            'name.unique'        => 'A névnek egyedinek kell lennie!',
+            'shortname.required' => 'Rövid név megadása kötelező!',
+            'shortname.string'   => 'A rövid névnek szövegnek kell lennie!',
+            'shortname.unique'   => 'A rövid névnek egyedinek kell lennie!',
+            'shortname.max'      => 'A maximális hossz 4 karakter!',
+            'image.image'        => 'A logónak képnek kell lennie!',
+        ]);
+
+        if($request->hasFile('image')){
+            $file = $request->file('image');
+            $file_name = $file->hashName();
+            Storage::disk('public')->put('logos/'. $file_name, $file->get());
+            $validated['image'] = $file_name;
+        } else{
+            $validated['image'] = $team->image;
+        }
+
+        $team->update($validated);
+
+        return to_route('teams.show', ['team' => $team]);
     }
 
     /**

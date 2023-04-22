@@ -1,5 +1,4 @@
 <x-main title="Mérkőzés módosítás">
-<div class="">
     <h1 class="text-2xl md:text-3xl font-bold text-center mb-2">Mérkőzés módosítása</h1>
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
@@ -32,7 +31,7 @@
                         </div>
                         <div class="mt-6">
                             <x-input-label for="start" value="Kezdési időpont" class="text-xl" />
-                            <x-text-input id="start" class="block mt-1 w-full" type="datetime-local" name="start" :value="old('start', $g->start)" autofocus />
+                            <x-text-input id="start" class="block mt-1 w-full" type="datetime-local" name="start" :value="old('start', date_format(date_create($g->start), 'Y-m-d H:i'))" autofocus />
                             <x-input-error :messages="$errors->get('start')" class="mt-2" />
                         </div>
                         <div class="mt-6">
@@ -43,5 +42,4 @@
             </div>
         </div>
     </div>
-</div>
 </x-main>
