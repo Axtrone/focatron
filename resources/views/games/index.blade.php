@@ -10,7 +10,7 @@
             <div class="my-4 p-3 mx-1 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100">
                 <a href="{{ route('games.show', ['game' => $lg]) }}" class="flex flex-row gap-2">
                     <div class="basis-3/5 text-center px-2 md:flex md:flex-row md:items-center">
-                        <span class="md:basis-1/2"><img class="rounded-lg h-16 w-18 mx-auto object-cover" src="{{ $lg->home_team->image ? $lg->home_team->image : "https://via.placeholder.com/840x480.png/?text=Logo" }}" alt="Logo"></span>
+                        <span class="md:basis-1/2"><img class="rounded-lg h-16 w-18 mx-auto object-cover" src="{{ $lg->home_team->image ? Storage::url('logos/'. $lg->home_team->image) : "https://via.placeholder.com/840x480.png/?text=Logo" }}" alt="Logo"></span>
                         <div class="md:basis-1/2">
                             <h4 class="mt-1 font-bold font-mono md:text-xl md:justify-self-end">{{ $lg->home_team->name }}</h4>
                             <h5 class="hidden md:inline font-semibold font-mono italic text-lg">{{ $lg->home_team->shortname }}</h5>
@@ -27,7 +27,7 @@
                         <p class="font-bold align-bottom">{{ date_format(date_create($lg->start), 'H:i') }}</p>
                     </div>
                     <div class="basis-3/5 text-center px-2 md:flex md:flex-row md:items-center">
-                        <span class="md:basis-1/2"><img class="rounded-lg h-16 w-18 mx-auto object-cover" src="{{ $lg->away_team->image ? $lg->away_team->image : "https://via.placeholder.com/840x480.png/?text=Logo" }}" alt="Logo"></span>
+                        <span class="md:basis-1/2"><img class="rounded-lg h-16 w-18 mx-auto object-cover" src="{{ $lg->away_team->image ? Storage::url('logos/'. $lg->away_team->image) : "https://via.placeholder.com/840x480.png/?text=Logo" }}" alt="Logo"></span>
                         <div class="md:order-first md:basis-1/2">
                             <h4 class="mt-1 font-bold font-mono md:text-xl">{{ $lg->away_team->name }}</h4>
                             <h5 class="hidden md:inline font-semibold font-mono italic md:text-lg">{{ $lg->away_team->shortname }}</h5>
@@ -82,7 +82,7 @@
             <div class="my-4 p-3 mx-1 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100">
                 <a href="{{ route('games.show', ['game' => $g]) }}" class="flex flex-row gap-2">
                     <div class="basis-3/5 text-center px-2 md:flex md:flex-row md:items-center">
-                        <span class="md:basis-1/2"><img class="rounded-lg h-16 w-18 mx-auto object-cover" src="{{ $g->home_team->image ? $g->home_team->image : "https://via.placeholder.com/840x480.png/?text=Logo" }}" alt="Logo"></span>
+                        <span class="md:basis-1/2"><img class="rounded-lg h-16 w-18 mx-auto object-cover" src="{{ $g->home_team->image ? Storage::url('logos/'. $g->home_team->image) : "https://via.placeholder.com/840x480.png/?text=Logo" }}" alt="Logo"></span>
                         <div class="md:basis-1/2">
                             <h4 class="mt-1 font-bold font-mono md:text-xl md:justify-self-end">{{ $g->home_team->name }}</h4>
                             <h5 class="hidden md:inline font-semibold font-mono italic text-lg">{{ $g->home_team->shortname }}</h5>
@@ -94,7 +94,7 @@
                         <p class="font-bold align-bottom">{{ date_format(date_create($g->start), 'H:i') }}</p>
                     </div>
                     <div class="basis-3/5 text-center px-2 md:flex md:flex-row md:items-center">
-                        <span class="md:basis-1/2"><img class="rounded-lg h-16 w-18 mx-auto object-cover" src="{{ $g->away_team->image ? $g->away_team->image : "https://via.placeholder.com/840x480.png/?text=Logo" }}" alt="Logo"></span>
+                        <span class="md:basis-1/2"><img class="rounded-lg h-16 w-18 mx-auto object-cover" src="{{ $g->away_team->image ? Storage::url('logos/'. $g->away_team->image) : "https://via.placeholder.com/840x480.png/?text=Logo" }}" alt="Logo"></span>
                         <div class="md:order-first md:basis-1/2">
                             <h4 class="mt-1 font-bold font-mono md:text-xl">{{ $g->away_team->name }}</h4>
                             <h5 class="hidden md:inline font-semibold font-mono italic md:text-lg">{{ $g->away_team->shortname }}</h5>

@@ -14,7 +14,7 @@ class GamePolicy
         return $u->is_admin;
     }
 
-    public function edit(User $u){
+    public function update(User $u){
         return $u->is_admin;
     }
 }

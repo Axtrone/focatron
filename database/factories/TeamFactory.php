@@ -21,7 +21,7 @@ class TeamFactory extends Factory
         return [
             'name' => $teamName,
             'shortname' => mb_strtoupper(collect(mb_str_split($teamName))->random(rand(3, (strlen($teamName) > 4 ? 4 : 3)))->implode('')),
-            'image' => fake()->randomElement([fake()->imageUrl(840), null]),
+            'image' => fake()->randomElement([fake()->randomElement(['01.png','02.png','03.png','04.png','05.png','06.png','07.png']), null]),
         ];
     }
 }

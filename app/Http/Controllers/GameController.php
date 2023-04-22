@@ -94,7 +94,7 @@ class GameController extends Controller
      */
     public function edit(Game $game)
     {
-        $this -> authorize('edit', Game::class);
+        $this -> authorize('update', Game::class);
 
         $teams = Team::get();
         return view('games.edit', ['teams' => $teams, 'g' => $game]);
@@ -105,7 +105,7 @@ class GameController extends Controller
      */
     public function update(Request $request, Game $game)
     {
-        $this -> authorize('edit', Game::class);
+        $this -> authorize('update', Game::class);
 
         $validated = $request->validate([
             'home_team_id'  => 'required|integer|exists:teams,id|different:away_team_id',
