@@ -44,6 +44,11 @@
                                 <th scope="col" class="px-6 py-3">
                                     Piros/sárga lapok
                                 </th>
+                                @can('create', \App\Player::class)
+                                <th scope="col" class="px-6 py-3">
+                                    Törlés
+                                </th>
+                                @endcan
                             </tr>
                         </thead>
                         <tbody>
@@ -67,13 +72,57 @@
                                     <td class="px-6 py-4">
                                         {{ $players_stats[strval($p->id)]['red_card'] }} / {{ $players_stats[strval($p->id)]['yellow_card'] }}
                                     </td>
+                                    @can('create', \App\Player::class)
+                                        @can('delete', [\App\Player::class, $players_stats[strval($p->id)]])
+                                            <td class="px-6 py-4">
+                                                <form action="{{ route('players.destroy', ['player' => $p]) }}" method="POST">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5">
+                                                        <i class="fa-solid fa-trash"></i>
+                                                    </button>
+                                                </form>
+                                            </td>
+                                        @else
+                                        <td></td>
+                                        @endcan
+                                    @endcan
                                 </tr>
                             @empty
-                                <p class="text-lg font-bold italic">Nincsenek játékosok</p>
+                                <td colspan="100%" class="text-lg font-bold italic text-center">Nincsenek játékosok</td>
                             @endforelse
                         </tbody>
                     </table>
                 </div>
+                @can('create', \App\Player::class)
+                    <x-new-model-modal open="{{ count($errors) == 0 ? 'false' : 'true' }}" title="Új játékos hozzáadása">
+                        <form class="mt-5" action="{{ route('players.store') }}" method="POST">
+                            @csrf
+
+                            <input type="hidden" id="team_id" name="team_id" value="{{ $t->id }}">
+                            <div>
+                                <x-input-label for="name" value="Név" class="text-lg" />
+                                <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" autofocus />
+                                <x-input-error :messages="$errors->get('name')" class="mt-2" />
+                            </div>
+                            <div class="mt-3">
+                                <x-input-label for="number" value="Mezszám" class="text-lg" />
+                                <x-text-input id="number" class="block mt-1 w-full" type="number" name="number" :value="old('number')" autofocus />
+                                <x-input-error :messages="$errors->get('number')" class="mt-2" />
+                            </div>
+                            <div class="mt-3">
+                                <x-input-label for="birthdate" value="Születési dátum" class="text-lg" />
+                                <x-text-input id="birthdate" class="block mt-1 w-full" type="date" name="birthdate" :value="old('birthdate')" autofocus />
+                                <x-input-error :messages="$errors->get('birthdate')" class="mt-2" />
+                            </div>
+                            <div class="flex justify-end mt-6">
+                                <button type="submit" class="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+                                    Mentés
+                                </button>
+                            </div>
+                        </form>
+                    </x-new-model-modal>
+                @endcan
 
             </div>
             <div class="bg-white rounded-lg shadow-md p-2 text-center mt-5">
@@ -111,7 +160,7 @@
                                         @endif
                                     </td>
                             @empty
-                                <p class="text-lg font-bold italic">Nincsenek játékosok</p>
+                                <td colspan="3" class="text-lg font-bold italic text-center"> Nincsenek meccsek</td>
                             @endforelse
                         </tbody>
                     </table>

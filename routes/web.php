@@ -5,6 +5,7 @@ use App\Http\Controllers\GameController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\TeamController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\PlayerController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,6 +25,7 @@ Route::get('/', function () {
 Route::resource('games', GameController::class);
 Route::resource('events', EventController::class);
 Route::resource('teams', TeamController::class);
+Route::resource('players', PlayerController::class);
 
 Route::post('games/{game}/close', [GameController::class, 'close'])->name('games.close');
 

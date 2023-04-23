@@ -47,7 +47,7 @@
                     </div>
                 @endforeach
                 @can('create', [\App\Event::class, $g])
-                    <x-new-event-modal open="{{ count($errors) == 0 ? 'false' : 'true' }}">
+                    <x-new-model-modal open="{{ count($errors) == 0 ? 'false' : 'true' }}" title="Új esemény hozzáadása">
                         <form class="mt-5" method="POST" action="{{ route('events.store') }}">
                             <input type="hidden" id="game_id" name="game_id" value="{{ $g->id }}">
                             @csrf
@@ -93,7 +93,7 @@
                                 </button>
                             </div>
                         </form>
-                    </x-new-event-modal>
+                    </x-new-model-modal>
                     <div class="flex justify-center my-3">
                         <form action="{{ route('games.close', ['game' => $g])}}" method="POST">
                             @csrf

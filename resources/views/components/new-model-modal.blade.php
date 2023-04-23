@@ -1,6 +1,6 @@
 <div x-data="{ modalOpen: {{ $open }} }">
     <div class="flex justify-center">
-        <button @click="modalOpen =!modalOpen" type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mt-2"><i class="fa-solid fa-plus me-2"></i>Új esemény rögzítése</button>
+        <button @click="modalOpen =!modalOpen" type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mt-2"><i class="fa-solid fa-plus me-2"></i>{{ $title }}</button>
     </div>
 
     <div x-show="modalOpen" class="fixed inset-0 z-50 overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true" x-cloak>

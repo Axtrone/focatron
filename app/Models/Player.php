@@ -13,6 +13,7 @@ class Player extends Model
         'name',
         'number',
         'birthdate',
+        'team_id'
     ];
 
     public function team(){
