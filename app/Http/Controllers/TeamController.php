@@ -17,6 +17,12 @@ class TeamController extends Controller
         return view('teams.index', ['teams' => $teams]);
     }
 
+    public function table()
+    {
+        $teams = Team::orderBy('name')->get();
+        return view('table', ['teams' => $teams]);
+    }
+
     /**
      * Show the form for creating a new resource.
      */

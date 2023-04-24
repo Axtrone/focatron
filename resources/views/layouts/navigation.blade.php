@@ -18,7 +18,7 @@
                     <x-nav-link :href="route('teams.index')" :active="request()->routeIs('teams.index')">
                         Csapatok
                     </x-nav-link>
-                    <x-nav-link>
+                    <x-nav-link :href="route('table')" :active="request()->routeIs('table')">
                         Tabella
                     </x-nav-link>
                     <x-nav-link>
@@ -91,7 +91,7 @@
             <x-responsive-nav-link :href="route('teams.index')" :active="request()->routeIs('teams.index')">
                 Csapatok
             </x-responsive-nav-link>
-            <x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('table')" :active="request()->routeIs('table')">
                 Tabella
             </x-responsive-nav-link>
             <x-responsive-nav-link>

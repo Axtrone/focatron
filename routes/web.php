@@ -28,6 +28,7 @@ Route::resource('teams', TeamController::class);
 Route::resource('players', PlayerController::class);
 
 Route::post('games/{game}/close', [GameController::class, 'close'])->name('games.close');
+Route::get('/table', [TeamController::class, 'table'])->name('table');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
