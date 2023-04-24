@@ -54,4 +54,40 @@ class Team extends Model
         }
         return $players;
     }
+
+    public function getPointsAttribute(){
+        $points = 0;
+        foreach ($this->home_games as $g) {
+            $result = $g->results;
+            if($result['home_team'] > $result['away_team']){
+                $points += 3;
+            }
+            else if($result['home_team'] === $result['away_team']){
+                $points += 1;
+            }
+        }
+        foreach ($this->away_games as $g) {
+            $result = $g->results;
+            if($result['home_team'] < $result['away_team']){
+                $points += 3;
+            }
+            else if($result['home_team'] === $result['away_team']){
+                $points += 1;
+            }
+        }
+        return $points;
+    }
+
+    public function getGoalDifferenceAttribute(){
+        $goal_difference = 0;
+        foreach ($this->home_games as $g) {
+            $result = $g->results;
+            $goal_difference += $result['home_team'] - $result['away_team'];
+        }
+        foreach ($this->away_games as $g) {
+            $result = $g->results;
+            $goal_difference += $result['away_team'] - $result['home_team'];
+        }
+        return $goal_difference;
+    }
 }

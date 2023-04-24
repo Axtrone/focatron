@@ -19,8 +19,19 @@ class TeamController extends Controller
 
     public function table()
     {
-        $teams = Team::orderBy('name')->get();
-        return view('table', ['teams' => $teams]);
+        $teams = Team::with('home_games', 'away_games', 'home_games.events', 'away_games.events', 'home_games.home_team', 'away_games.home_team',
+        'home_games.events.player', 'away_games.events.player', 'home_games.events.player.team', 'away_games.events.player.team')->get()
+        ->sort(function($t1, $t2) {
+            if($t1->points == $t2->points){
+                if($t1->goal_difference == $t2->goal_difference){
+                    $t1->name < $t2->name ? -1 : 1;
+                }
+                return $t1->goal_difference > $t2->goal_difference ? -1 : 1;
+            }
+            return $t1->points > $t2->points ? -1 : 1;
+        });
+
+        return view('table', ['teams' => $teams, 'start' => 1]);
     }
 
     /**
