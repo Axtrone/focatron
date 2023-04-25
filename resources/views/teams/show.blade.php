@@ -6,8 +6,8 @@
             <div class="">
                 <img class="rounded-lg h-16 w-18 mx-auto object-cover" src="{{ $t->image ? Storage::url('logos/'. $t->image) : "https://via.placeholder.com/840x480.png/?text=Logo" }}" alt="Logo">
             </div>
-            <div class="">
-                <p class="font-bold font-mono text text-xl">{{ $t->name }}</p>
+            <div class="relative">
+                <x-fav-button team="{{$t->id}}" class="left-[44%] -bottom-1.5"/><p class="font-bold font-mono text text-xl">{{ $t->name }}</p>
                 <p class="font-semibold font-mono italic text-lg">{{ $t->shortname }}</p>
             </div>
             @can('update', \App\Team::class)
@@ -159,6 +159,7 @@
                                             <span class="italic">Jövőbeli</span>
                                         @endif
                                     </td>
+                                </tr>
                             @empty
                                 <td colspan="3" class="text-lg font-bold italic text-center"> Nincsenek meccsek</td>
                             @endforelse

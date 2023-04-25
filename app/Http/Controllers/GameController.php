@@ -7,6 +7,7 @@ use App\Models\Team;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\Auth;
 
 class GameController extends Controller
 {
@@ -142,7 +143,9 @@ class GameController extends Controller
     }
 
     public function favourites(){
+        $teams = Auth::user()->teams;
+        $games = Game::whereIn('home_team_id', $teams->map(fn($t) => $t->id))->orWhereIn('away_team_id', $teams->map(fn($t) => $t->id))->orderBy('start')->paginate(10, '*', 'p');
 
-        return view('favourites');
+        return view('favourites', ['teams' => $teams, 'games' => $games]);
     }
 }

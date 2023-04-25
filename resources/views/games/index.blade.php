@@ -12,7 +12,7 @@
                     <div class="basis-3/5 text-center px-2 md:flex md:flex-row md:items-center">
                         <span class="md:basis-1/2"><img class="rounded-lg h-16 w-18 mx-auto object-cover" src="{{ $lg->home_team->image ? Storage::url('logos/'. $lg->home_team->image) : "https://via.placeholder.com/840x480.png/?text=Logo" }}" alt="Logo"></span>
                         <div class="md:basis-1/2">
-                            <h4 class="mt-1 font-bold font-mono md:text-xl md:justify-self-end">{{ $lg->home_team->name }}</h4>
+                            <h4 class="mt-1 font-bold font-mono md:text-xl md:justify-self-end relative"><x-fav-button team="{{$lg->home_team->id}}" class="left-[44%] md:-bottom-14 -bottom-5"/>{{ $lg->home_team->name }}</h4>
                             <h5 class="hidden md:inline font-semibold font-mono italic text-lg">{{ $lg->home_team->shortname }}</h5>
                         </div>
                     </div>
@@ -29,7 +29,7 @@
                     <div class="basis-3/5 text-center px-2 md:flex md:flex-row md:items-center">
                         <span class="md:basis-1/2"><img class="rounded-lg h-16 w-18 mx-auto object-cover" src="{{ $lg->away_team->image ? Storage::url('logos/'. $lg->away_team->image) : "https://via.placeholder.com/840x480.png/?text=Logo" }}" alt="Logo"></span>
                         <div class="md:order-first md:basis-1/2">
-                            <h4 class="mt-1 font-bold font-mono md:text-xl">{{ $lg->away_team->name }}</h4>
+                            <h4 class="mt-1 font-bold font-mono md:text-xl relative">{{ $lg->away_team->name }}<x-fav-button team="{{$lg->away_team->id}}" class="left-[44%] md:-bottom-14 -bottom-5"/></h4>
                             <h5 class="hidden md:inline font-semibold font-mono italic md:text-lg">{{ $lg->away_team->shortname }}</h5>
                         </div>
                     </div>
@@ -84,7 +84,7 @@
                     <div class="basis-3/5 text-center px-2 md:flex md:flex-row md:items-center">
                         <span class="md:basis-1/2"><img class="rounded-lg h-16 w-18 mx-auto object-cover" src="{{ $g->home_team->image ? Storage::url('logos/'. $g->home_team->image) : "https://via.placeholder.com/840x480.png/?text=Logo" }}" alt="Logo"></span>
                         <div class="md:basis-1/2">
-                            <h4 class="mt-1 font-bold font-mono md:text-xl md:justify-self-end">{{ $g->home_team->name }}</h4>
+                            <h4 class="mt-1 font-bold font-mono md:text-xl md:justify-self-end relative"><x-fav-button team="{{$g->home_team->id}}" class="left-[44%] md:-bottom-14 -bottom-5"/>{{ $g->home_team->name }}</h4>
                             <h5 class="hidden md:inline font-semibold font-mono italic text-lg">{{ $g->home_team->shortname }}</h5>
                         </div>
                     </div>
@@ -96,7 +96,7 @@
                     <div class="basis-3/5 text-center px-2 md:flex md:flex-row md:items-center">
                         <span class="md:basis-1/2"><img class="rounded-lg h-16 w-18 mx-auto object-cover" src="{{ $g->away_team->image ? Storage::url('logos/'. $g->away_team->image) : "https://via.placeholder.com/840x480.png/?text=Logo" }}" alt="Logo"></span>
                         <div class="md:order-first md:basis-1/2">
-                            <h4 class="mt-1 font-bold font-mono md:text-xl">{{ $g->away_team->name }}</h4>
+                            <h4 class="mt-1 font-bold font-mono md:text-xl relative"><x-fav-button team="{{$g->away_team->id}}" class="left-[44%] md:-bottom-14 -bottom-5"/>{{ $g->away_team->name }}</h4>
                             <h5 class="hidden md:inline font-semibold font-mono italic md:text-lg">{{ $g->away_team->shortname }}</h5>
                         </div>
                     </div>

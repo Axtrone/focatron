@@ -31,6 +31,8 @@ Route::post('games/{game}/close', [GameController::class, 'close'])->name('games
 Route::get('/table', [TeamController::class, 'table'])->name('table');
 Route::get('/favourites', [GameController::class, 'favourites'])
  ->middleware('auth')->name('favourites');
+Route::post('/addfav/{team}', [ProfileController::class ,'addFav'])->name('addfav');
+Route::post('/delfav/{team}', [ProfileController::class ,'delFav'])->name('delfav');
 
 Route::get('/dashboard', function () {
     return view('dashboard');

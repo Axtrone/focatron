@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
+use \App\Models\Team;
 
 class ProfileController extends Controller
 {
@@ -58,5 +59,13 @@ class ProfileController extends Controller
         return Redirect::to('/');
     }
 
-    
+    public function addFav(Team $team){
+        Auth::user()->teams()->attach($team->id);
+        return redirect()->back();
+    }
+
+    public function delFav(Team $team){
+        Auth::user()->teams()->detach($team->id);
+        return redirect()->back();
+    }
 }

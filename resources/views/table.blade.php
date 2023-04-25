@@ -26,7 +26,7 @@
                             <img class="rounded-lg h-16 w-18 mx-auto object-cover" src="{{ $t->image ? Storage::url('logos/'. $t->image) : "https://via.placeholder.com/840x480.png/?text=Logo" }}" alt="Logo">
                         </td>
                         <td class="whitespace-nowrap px-6 py-4 flex flex-col text-center">
-                            <p class="font-bold font-mono text md:text-xl">{{ $t->name }}</p>
+                            <div class="relative"><x-fav-button team="{{$t->id}}" class="text-lg left-[40%] md:left-[44%] top-8 md:top-11"/><p class="font-bold font-mono text md:text-xl">{{ $t->name }}</p></div>
                             <p class="font-semibold font-mono italic md:text-lg">{{ $t->shortname }}</p>
                         </td>
                         <td class="text-center text-xl font-mono">
