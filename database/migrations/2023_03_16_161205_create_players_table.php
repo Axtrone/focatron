@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->integer('number');
             $table->date('birthdate');
-            $table->foreignId('team_id')->constrained();
+            $table->foreignId('team_id')->constrained()->cascadeOnDelete();
             $table->timestamps();
         });
     }

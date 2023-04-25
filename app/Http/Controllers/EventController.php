@@ -5,25 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Event;
 use App\Models\Game;
+use Illuminate\Support\Facades\Session;
 
 class EventController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
     /**
      * Store a newly created resource in storage.
      */
@@ -43,31 +28,9 @@ class EventController extends Controller
 
         Event::create($validated);
 
+        Session::flash('event-created');
+
         return to_route('games.show', ['game' => $validated['game_id']]);
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
     }
 
     /**
@@ -77,6 +40,7 @@ class EventController extends Controller
     {
         $this->authorize('delete', [Event::class, $event, Game::find($request['game_id'])]);
         $event->delete();
+        Session::flash('event-deleted');
         return to_route('games.show', ['game' => $request['game_id']]);
     }
 }

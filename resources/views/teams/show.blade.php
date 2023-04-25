@@ -1,13 +1,16 @@
 <x-main title="Csapatok">
+    @if (Session::has('team-edited'))
+        <x-toast created="Csapat" event="módosítva"/>
+    @endif
     <h1 class="text-2xl md:text-3xl font-bold text-center mb-3">Csapatrészletező</h1>
 
     <div class="mx-2">
         <div class="bg-white rounded-lg shadow p-2 text-center flex justify-evenly max-w-md mx-auto">
-            <div class="">
+            <div class="flex items-center">
                 <img class="rounded-lg h-16 w-18 mx-auto object-cover" src="{{ $t->image ? Storage::url('logos/'. $t->image) : "https://via.placeholder.com/840x480.png/?text=Logo" }}" alt="Logo">
             </div>
-            <div class="relative">
-                <x-fav-button team="{{$t->id}}" class="left-[44%] -bottom-1.5"/><p class="font-bold font-mono text text-xl">{{ $t->name }}</p>
+            <div>
+                <x-fav-button team="{{$t->id}}"/><p class="font-bold font-mono text text-xl">{{ $t->name }}</p>
                 <p class="font-semibold font-mono italic text-lg">{{ $t->shortname }}</p>
             </div>
             @can('update', \App\Team::class)

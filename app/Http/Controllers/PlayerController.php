@@ -4,25 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Player;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class PlayerController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
     /**
      * Store a newly created resource in storage.
      */
@@ -47,31 +32,9 @@ class PlayerController extends Controller
 
         Player::create($validated);
 
+        Session::flash('player-created');
+
         return to_route('teams.show', ['team' => $validated['team_id']]);
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-
     }
 
     /**
@@ -82,6 +45,9 @@ class PlayerController extends Controller
         $this->authorize('delete', [Player::class, $player->team->players_stats[strval($player->id)]]);
 
         $player->delete();
+
+        Session::flash('player-deleted');
+
         return to_route('teams.show', ['team' => $player->team]);
     }
 }

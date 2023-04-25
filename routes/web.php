@@ -23,9 +23,9 @@ Route::get('/', function () {
 })->name('welcome');
 
 Route::resource('games', GameController::class);
-Route::resource('events', EventController::class);
-Route::resource('teams', TeamController::class);
-Route::resource('players', PlayerController::class);
+Route::resource('events', EventController::class, ['only' => ['store', 'destroy']]);
+Route::resource('teams', TeamController::class, ['except' => ['destory']]);
+Route::resource('players', PlayerController::class, ['only' => ['store', 'destroy']]);
 
 Route::post('games/{game}/close', [GameController::class, 'close'])->name('games.close');
 Route::get('/table', [TeamController::class, 'table'])->name('table');
@@ -34,9 +34,6 @@ Route::get('/favourites', [GameController::class, 'favourites'])
 Route::post('/addfav/{team}', [ProfileController::class ,'addFav'])->name('addfav');
 Route::post('/delfav/{team}', [ProfileController::class ,'delFav'])->name('delfav');
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

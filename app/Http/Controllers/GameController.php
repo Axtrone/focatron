@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class GameController extends Controller
 {
@@ -67,6 +68,8 @@ class GameController extends Controller
 
         Game::create($validated);
 
+        Session::flash('game-created');
+
         return to_route('games.index');
     }
 
@@ -122,6 +125,8 @@ class GameController extends Controller
         $validated['start'] = date_create($validated['start']);
         $game->update($validated);
 
+        Session::flash('game-edited');
+
         return to_route('games.index');
     }
 
@@ -132,6 +137,7 @@ class GameController extends Controller
     {
         $this->authorize('delete', Game::class);
         Game::destroy($game->id);
+        Session::flash('game-deleted');
         return to_route('games.index');
     }
 
@@ -144,7 +150,11 @@ class GameController extends Controller
 
     public function favourites(){
         $teams = Auth::user()->teams;
-        $games = Game::whereIn('home_team_id', $teams->map(fn($t) => $t->id))->orWhereIn('away_team_id', $teams->map(fn($t) => $t->id))->orderBy('start')->paginate(10, '*', 'p');
+        $games = Game::with('home_team.players', 'away_team.players', 'events', 'events.player','events.player.team')
+            ->whereIn('home_team_id', $teams->map(fn($t) => $t->id))
+            ->orWhereIn('away_team_id', $teams->map(fn($t) => $t->id))
+            ->orderBy('start')
+            ->paginate(10, '*', 'p');
 
         return view('favourites', ['teams' => $teams, 'games' => $games]);
     }

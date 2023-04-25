@@ -1,4 +1,7 @@
 <x-main title="Csapatok">
+    @if (Session::has('team-created'))
+        <x-toast created="Csapat" event="létrehozva"/>
+    @endif
     <h1 class="text-2xl md:text-3xl font-bold text-center mb-3">Csapatok</h1>
 
     <div class="max-w-3xl mx-auto">
@@ -21,7 +24,7 @@
                             <img class="rounded-lg h-16 w-18 mx-auto object-cover" src="{{ $t->image ? Storage::url('logos/'. $t->image) : "https://via.placeholder.com/840x480.png/?text=Logo" }}" alt="Logo">
                         </td>
                         <td class="whitespace-nowrap px-6 py-4 flex flex-col text-center">
-                            <div class="relative"><x-fav-button team="{{$t->id}}" class="text-lg top-3 md:left-8"/><p class="font-bold font-mono text md:text-xl">{{ $t->name }}</p></div>
+                            <div class="relative"><x-fav-button team="{{$t->id}}"/><p class="font-bold font-mono text md:text-xl">{{ $t->name }}</p></div>
                             <p class="font-semibold font-mono italic md:text-lg">{{ $t->shortname }}</p>
                         </td>
                         <td class="whitespace-nowrap px-6 py-4">

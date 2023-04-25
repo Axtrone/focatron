@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Team;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Session;
 
 class TeamController extends Controller
 {
@@ -75,6 +76,8 @@ class TeamController extends Controller
 
         Team::create($validated);
 
+        Session::flash('team-created');
+
         return to_route('teams.index');
     }
 
@@ -133,14 +136,8 @@ class TeamController extends Controller
 
         $team->update($validated);
 
-        return to_route('teams.show', ['team' => $team]);
-    }
+        Session::flash('team-edited');
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Team $team)
-    {
-        //
+        return to_route('teams.show', ['team' => $team]);
     }
 }
