@@ -130,7 +130,7 @@ class GameController extends Controller
     public function destroy(Game $game)
     {
         $this->authorize('delete', Game::class);
-        $game->delete();
+        Game::destroy($game->id);
         return to_route('games.index');
     }
 
@@ -139,5 +139,10 @@ class GameController extends Controller
         $game->finished = true;
         $game->save();
         return to_route('games.show', ['game' => $game]);
+    }
+
+    public function favourites(){
+
+        return view('favourites');
     }
 }
