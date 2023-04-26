@@ -10,6 +10,8 @@ class Event extends Model
     protected $fillable = [
         'type',
         'minute',
+        'game_id',
+        'player_id'
     ];
 
     use HasFactory;
@@ -18,7 +20,7 @@ class Event extends Model
     {
         return $this->belongsTo(Game::class);
     }
-    public function plyer()
+    public function player()
     {
         return $this->belongsTo(Player::class);
     }

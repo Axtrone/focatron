@@ -22,13 +22,14 @@ class DatabaseSeeder extends Seeder
         define('TEAM_COUNT',12);
         define('USER_COUNT',20);
         define('PLAYER_COUNT',11);
-        define('GAME_COUNT', 30);
+        define('GAME_COUNT', 40);
 
         // Generate users
         $users = collect();
         $users->add(User::factory()->create([
             'email' => 'admin@szerveroldali.hu',
-            'password' => Hash::make("adminpwd")
+            'password' => Hash::make("adminpwd"),
+            'is_admin' => true
         ]));
         for($i = 1; $i <= USER_COUNT; $i++){
             $users -> add(User::factory()->create([
@@ -47,6 +48,16 @@ class DatabaseSeeder extends Seeder
             }
             $teams->add($team);
         }
+
+        //Generate live game
+        $t = $teams->random(2);
+        Game::factory()->create([
+            'home_team_id' => $t[0]->id,
+            'away_team_id' => $t[1]->id,
+            'start' => now()->modify('-10 minutes'),
+            'finished' => false,
+        ]);
+
 
         // Generate games and events
         for ($i=0; $i < GAME_COUNT; $i++) {
