@@ -39,7 +39,7 @@
             <div class="bg-gray-400 bg-opacity-50 m-2 rounded-xl text-center p-4 mt-0 md:mt-10">
                 <h1 class="text-4xl font-semibold font-mono">Focatron</h1>
                 <p>Üdvözöllek a <strong>Focatron hivatalos weboldalán</strong>.</p>
-                <p class="text-justify">Cégünk 2009-ban alakult, a digitális forradalom elején. Célunk azóta is a magyar futball <strong>digitalizációja</strong>, egy kényelmes internetes tér nyújtása a sportág rajongóinak</p>
+                <p class="text-justify">Cégünk 2009-ben alakult, a digitális forradalom elején. Célunk azóta is a magyar futball <strong>digitalizációja</strong>, egy kényelmes internetes tér nyújtása a sportág rajongóinak</p>
                 <p class="italic mt-2">Kérlek válassz menüpontot a <strong>fenti lehetőségek</strong> közül.</p>
             </div>
         </div>

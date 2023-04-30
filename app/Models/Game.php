@@ -31,7 +31,7 @@ class Game extends Model
 
         foreach ($this->events as $e) {
             if($e->type == 'goal'){
-                if($e->player->team == $this->home_team){
+                if($e->player->team->id == $this->home_team->id){
                     $res['home_team']++;
                 }
                 else{
@@ -39,7 +39,7 @@ class Game extends Model
                 }
             }
             else if($e->type == 'own_goal'){
-                if($e->player->team == $this->home_team){
+                if($e->player->team->id == $this->home_team->id){
                     $res['away_team']++;
                 }
                 else{
